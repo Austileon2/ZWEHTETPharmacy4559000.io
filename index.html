@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zwe Htet Pharmacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a7de1;
+            --secondary: #3bb77e;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* 3D Effects */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .card-3d:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-3d {
+            position: relative;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-3px) translateZ(10px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(15deg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-circle i {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%232a7de1" width="50" height="50"/><rect fill="%233bb77e" x="50" width="50" height="50"/><rect fill="%233bb77e" y="50" width="50" height="50"/><rect fill="%232a7de1" x="50" y="50" width="50" height="50"/></svg>') center/cover;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(42, 125, 225, 0.8), rgba(59, 183, 126, 0.8));
+        }
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1c68d3;
+            transform: translateY(-2px);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 2rem;
+            background: var(--light);
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .contact-text h3 {
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+        .contact-text p {
+            color: #666;
+        }
+
+        /* Image Upload Section */
+        .image-upload {
+            padding: 4rem 2rem;
+            background: white;
+            text-align: center;
+        }
+
+        .upload-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            background: #f9f9f9;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: #999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-circle">
+                    <i class="fas fa-mortar-pestle"></i>
+                </div>
+                <div class="logo-text">Zwe Htet Pharmacy</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#injections">Injections</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Your Trusted Pharmacy in Dala Township</h1>
+            <p>We provide high-quality medicines, healthcare products, and professional advice to keep you and your family healthy.</p>
+            <a href="#products" class="btn btn-3d">View Products</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <h2 class="section-title">Our Pharmacy Products</h2>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card card-3d">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1lZGljaW5lfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=80" alt="Medicine">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Paracetamol 500mg</h3>
+                    <div class="product-price">1,500 MMK</div>
+                    <p class="product-description">Effective pain relief and fever reduction. Pack of 10 tablets.</p>
+                    <a href="#contact" class="btn">Order Now</a>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card card-3d">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1550572017-edd951b55104?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG1lZGljaW5lfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=80" alt="Medicine">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Amoxicillin 250mg</h3>
+                    <div class="product-price">3,200 MMK</div>
+                    <p class="product-description">Antibiotic for bacterial infections. Capsules, pack of 12.</p>
+                    <a href="#contact" class="btn">Order Now</a>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card card-3d">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bWVkaWNpbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=80" alt="Medicine">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Vitamin C 1000mg</h3>
+                    <div class="product-price">4,500 MMK</div>
+                    <p class="product-description">Boosts immune system and antioxidant protection. 30 tablets.</p>
+                    <a href="#contact" class="btn">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Injections Section -->
+    <section class="products" id="injections" style="background: #f8f9fa; padding: 4rem 2rem;">
+        <h2 class="section-title">Medical Injections</h2>
+        <div class="product-grid">
+            <!-- Injection 1 -->
+            <div class="product-card card-3d">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1606167668584-78701c57f13d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5qZWN0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=80" alt="Injection">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">B12 Vitamin Injection</h3>
+                    <div class="product-price">8,000 MMK</div>
+                    <p class="product-description">Energy boost and nervous system support. 1ml ampoule.</p>
+                    <a href="#contact" class="btn">Order Now</a>
+                </div>
+            </div>
+
+            <!-- Injection 2 -->
+            <div class="product-card card-3d">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1589985270826-4b7fe135a9c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aW5qZWN0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=80" alt="Injection">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Dexamethasone Injection</h3>
+                    <div class="product-price">6,500 MMK</div>
+                    <p class="product-description">Anti-inflammatory and immunosuppressant. 2ml vial.</p>
+                    <a href="#contact" class="btn">Order Now</a>
+                </div>
+            </div>
+
+            <!-- Injection 3 -->
+            <div class="product-card card-3d">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603398938373-e54da0bb5e48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGluamVjdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Injection">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Insulin Injection</h3>
+                    <div class="product-price">12,000 MMK</div>
+                    <p class="product-description">For diabetes management. 10ml vial.</p>
+                    <a href="#contact" class="btn">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Our Location</h3>
+                        <p>Dala Township, Yangon, Myanmar</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Call Us</h3>
+                        <p>09 400822166</p>
+                        <p>09 266999197</p>
+                        <p>09 450071772</p>
+                        <p>09 663633893</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Email Us</h3>
+                        <p>steven9121997@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Delivery Service</h3>
+                        <p>Free delivery within Dala Township</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Upload Section -->
+    <section class="image-upload">
+        <h2 class="section-title">Upload Your Pharmacy Images</h2>
+        <div class="upload-container">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <p>Drag & drop your images here or click to browse</p>
+            <input type="file" id="image-upload-input" accept="image/*" multiple style="display: none;">
+            <button class="btn btn-3d" onclick="document.getElementById('image-upload-input').click()">Select Images</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Zwe Htet Pharmacy</div>
+            <p>Your health is our priority</p>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#products">Products</a>
+                <a href="#injections">Injections</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Zwe Htet Pharmacy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple image upload functionality
+        document.getElementById('image-upload-input').addEventListener('change', function(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                alert(You've selected ${files.length} image(s) for upload!);
+                // In a real application, you would handle the file upload here
+            }
+        });
+
+        // 3D effect for cards on scroll
+        document.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.card-3d');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const speed = 0.1;
+                    const yPos = -rect
